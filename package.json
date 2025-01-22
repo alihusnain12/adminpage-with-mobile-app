@@ -18,6 +18,7 @@
     "i18next": "^24.2.1",
     "i18next-browser-languagedetector": "^8.0.2",
     "next": "14.2.15",
+    "nextjs-toploader": "^3.7.15",
     "react": "^18",
     "react-dom": "^18",
     "react-i18next": "^15.4.0",
@@ -25,6 +26,7 @@
     "react-loader-spinner": "^6.1.6",
     "react-modal": "^3.16.3",
     "react-redux": "^9.2.0",
+    "react-slider": "^2.0.6",
     "react-toastify": "^11.0.3",
     "redux-persist": "^6.0.0",
     "yup": "^1.6.1"

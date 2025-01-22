@@ -6,6 +6,8 @@ import Modal from "react-modal";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
+import { MdDelete } from "react-icons/md";
+import { toast, ToastContainer } from "react-toastify";
 
 // Define styles for status
 const statusStyles = {
@@ -76,22 +78,39 @@ const LeadTable = () => {
 
         // Check if the response data has users
         if (res.data && res.data.users) {
-          setClientList(res.data.users); // Populate with users data
+          setClientList(res.data.users); 
         }
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false); // Set loading to false after data is fetched
+        setLoading(false); 
       }
     };
 
-    fetchData(); // Call fetchData function to fetch the data
-  }, [token]); // The effect will run if the token changes
+    fetchData(); 
+  }, [token]); 
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading message until data is fetched
+    return <div>Loading...</div>; 
   }
 
+  // delete User 
+
+  const handleDelete=async(package_id)=>{
+    try {
+      const res=await axios.delete(`https://api.loctour.com/api/users/${package_id}`,
+        {
+          headers: {
+              "x-auth-token": token,
+          },
+      }
+      )
+      toast.success("User deleted successfully")
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <Stack spacing={2} className="mt-10">
       <div>
@@ -132,9 +151,9 @@ const LeadTable = () => {
                         src={client.image}
                         alt={client.name}
                         width={32}
-                        height={102}
+                        height={32}
                         style={{ borderRadius: "50%" }}  
-                        className=" mr-2" // Make image rounded
+                        className=" h-16 w-16 mr-2" // Make image rounded
                       />
                       {client.name}
                     </td>
@@ -151,10 +170,10 @@ const LeadTable = () => {
                     <td className="py-3 px-3 text-left text-gray-600">{client.type}</td>
                     <td className="py-3 px-3 text-right">
                       <button
-                        onClick={() => openModal(client.status, client)}
-                        className="mx-1 text-yellow-500 hover:text-yellow-600"
+                      onClick={()=>handleDelete(client._id)}
+                        className="mx-1 text-white hover:text-yellow-600 bg-blue-400 rounded-full p-2"
                       >
-                        <FaPen className="text-xl" /> {/* Replaced with an icon */}
+                        <MdDelete className="text-xl" /> 
                       </button>
                     </td>
                   </tr>
@@ -220,6 +239,7 @@ const LeadTable = () => {
           </div>
         </Modal>
       </div>
+      <ToastContainer/>
     </Stack>
   );
 };

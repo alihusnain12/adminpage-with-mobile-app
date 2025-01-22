@@ -6,8 +6,7 @@ import Sidebar from "@/components/sidebar";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react"; // Ensure the useEffect hook is imported
 import i18n from "../../i18"; // Make sure to import the i18n configuration
-import { Provider } from 'react-redux'; // Import Provider
-import { store } from '../redux/store'; 
+import NextTopLoader from "nextjs-toploader";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,12 +38,12 @@ export default function RootLayout({ children }) {
   }, []);
 
   return (
-    <Provider store={store}>
-        <html lang="en">
+
+<html lang="en">
           <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
             {showSidebar ? <Sidebar>{children}</Sidebar> : children}
+            <NextTopLoader/>
           </body>
         </html>
-    </Provider>
   );
 }
